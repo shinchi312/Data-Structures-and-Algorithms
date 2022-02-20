@@ -1,0 +1,34 @@
+Question :
+You are given an array a of size n.
+
+You can perform the following operation on the array:
+
+Choose two different integers i,j (1≤i<j≤n), replace ai with x and aj with y. In order not to break the array, ai|aj=x|y must be held, where | denotes the bitwise OR operation. Notice that x and y are non-negative integers.
+Please output the minimum sum of the array you can get after using the operation above any number of times.
+
+logic: if you replace one number with aur of two number and other with zero ,then at the end of iteration you will be left with all zero numbers and OR of all the number of array
+
+Code:
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+using dd = vector<vector<int>>;
+#define rep(i, n) for(int i = 0; i < n; ++i)
+#define test int t;cin>>t;while(t--)
+#define testx int t;cin>>t;for(int x=1;x<=t;x++)
+#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define endl '\n'
+int32_t main() {
+    IOS
+    test{
+        int n ;
+        cin>>n;
+        int ans = 0;
+        while(n--){int x ;
+            cin>>x;
+            ans|=x;
+        }
+        cout<<ans<<endl;
+    }
+
+}
