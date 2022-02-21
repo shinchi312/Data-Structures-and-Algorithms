@@ -1,0 +1,77 @@
+
+Very Good question on Kahn's Algorithm and good greedy solution :
+
+You are given a directed graph consisting of n vertices and m edges (each edge is directed, so it can be traversed in only one direction). You are allowed to remove at most one edge from it.
+
+Can you make this graph acyclic by removing at most one edge from it? A directed graph is called acyclic iff it doesn't contain any cycle (a non-empty path that starts and ends in the same vertex).
+
+
+logic : we have to optimize the naive approach : if remove one edge then find if cycle exists or not then we can do it in O(m*(m+n)) as m is big it will not satisfy the constraints so now we
+need to find optimal approach to removing edge and doing algorithm in O(n*(n+m))
+one of the approach can be :
+use kahn's algorithm and remove one of the ind of the vertice which will result in randomly deleting the one of the edge from that vertice and then apply naive approch of finding 
+the cycle
+
+
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+//#define int long long
+using dd = vector<vector<int>>;
+#define rep(i, n) for(int i = 0; i < n; ++i)
+#define test int t;cin>>t;while(t--)
+#define testx int t;cin>>t;for(int x=1;x<=t;x++)
+#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define endl '\n'
+int maxn = 100010;
+vector<vector<int>>adj(maxn);
+vector<int>ind(maxn);
+vector<int>Ind(maxn);
+  int n , m;
+void add(int u, int v){
+    adj[u].push_back(v);
+}
+
+bool topsort()
+{ queue<int>q;
+    rep(i,n){if(ind[i]==0){q.push(i);}}
+    int cnt = 0;
+    while(!q.empty()){
+        int s = q.front();
+        cnt++;
+        q.pop();
+        for(auto u : adj[s]){
+            ind[u]--;
+            if(ind[u]==0)q.push(u);
+        }
+        
+    }
+    return cnt == n;
+    
+}
+
+int32_t main() {
+    IOS
+  
+    cin>>n>>m;
+    rep(i,m){
+        int u,v;
+        cin>>u>>v;
+        add(u-1,v-1);
+        ind[v-1]++;
+    }
+    rep(i,n)Ind[i]= ind[i];
+    rep(i,n){
+        if(!Ind[i])continue;
+        rep(j,n){ind[j]=Ind[j];}
+        ind[i]--;
+        if(topsort()){cout<<"YES";return 0;}
+    }
+    
+cout<<"NO";
+
+
+}
