@@ -1,0 +1,54 @@
+
+Good Greedy question : 
+
+You are given an array a of n elements.
+
+Your can perform the following operation no more than n times: Select three indices x,y,z (1≤x<y<z≤n) and replace ax with ay−az. After the operation, |ax| need to be less than 1018.
+
+Your goal is to make the resulting array non-decreasing. If there are multiple solutions, you can output any. If it is impossible to achieve, you should report it as well.
+
+
+
+logic : it is an observation question ans will we -1 if a[n-2]>a[n-1] because u cannot make a[n-2] less than a[n-1]
+and if a[n-1]<0 ur array needs to be sorted otherwise it will be impossible to make array non-decreasing
+to make array non-decreasing u just need to replace every every array element with a[n-1]-a[n-2]
+
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+//#define int long long
+using dd = vector<vector<int>>;
+#define rep(i, n) for(int i = 0; i < n; ++i)
+#define test int t;cin>>t;while(t--)
+#define testx int t;cin>>t;for(int x=1;x<=t;x++)
+#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define endl '\n'
+
+
+int32_t main() {
+    IOS
+    test{
+        
+        int n ;
+        cin>>n;
+        vector<int>a(n);
+        rep(i,n) cin>>a[i];
+        if(a[n-1]<a[n-2]){cout<<-1<<endl;continue;}
+        if(a[n-1]<0){
+            if(is_sorted(a.begin(),a.end())){cout<<0<<endl;continue;}
+            else cout<<-1<<endl; continue;
+        }
+        
+        cout<<n-2<<endl;
+        for(int i = 1;i<=n-2;i++){
+            cout<<i<<" "<<n-1<<" "<<n<<endl;
+        }
+            }
+  
+    
+
+
+}
