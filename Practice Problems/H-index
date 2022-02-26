@@ -18,6 +18,7 @@ Case #2: 1 1 2 2 2 3
 Logic : u need to keep track of previous index number and find the number of occurence greater that h for which  naive approach will take O(n^2) time but by using frenwick tree we can reduce
 it to O(n(log maxn)) assign each number 1 to keep track of occurence of number and then perform range query sum over range (maxn, h_index) using fenwick tree
 
+-another logic can be of using the priority queue to remove all elements less then current h_index
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -80,3 +81,4 @@ int32_t main() {
 
 
 }
+
