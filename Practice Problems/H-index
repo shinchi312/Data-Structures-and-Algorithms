@@ -1,0 +1,82 @@
+Jorge is a physicist who has published many research papers and wants to know how much impact they have had in the academic community. 
+To measure impact, he has developed a metric, H-index, to score each of his papers based on the number of times it has been cited by other papers. Specifically, the H-index score of a researcher is the largest integer H such that the researcher has H papers with at least H citations each.
+
+Jorge has written N papers in his lifetime. The i-th paper has Ci citations. Each paper was written sequentially in the order provided, 
+and the number of citations that each paper has will never change. Please help Jorge determine his H-index score after each paper he wrote.
+INPUT :
+2
+3
+5 1 2
+6
+1 3 3 2 2 15
+
+OUTPUT :
+
+Case #1: 1 1 2
+Case #2: 1 1 2 2 2 3
+
+Logic : u need to keep track of previous index number and find the number of occurence greater that h for which  naive approach will take O(n^2) time but by using frenwick tree we can reduce
+it to O(n(log maxn)) assign each number 1 to keep track of occurence of number and then perform range query sum over range (maxn, h_index) using fenwick tree
+
+
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+using dd = vector<vector<int>>;
+#define rep(i, n) for(int i = 0; i < n; ++i)
+#define test int t;cin>>t;while(t--)
+#define testx int t;cin>>t;for(int x=1;x<=t;x++)
+#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define endl '\n'
+int maxn = 100001;
+
+
+void update(int x, vector<int>&arr){
+    while(x<maxn){
+        arr[x]+=1;
+        x+= x&(-x);
+    }
+}
+int sum(int x,vector<int>&arr){
+    int ans = 0;
+    while(x>0){
+        ans+=arr[x];
+          x-= x&(-x);
+    }
+    return ans;
+}
+
+
+
+
+int32_t main() {
+    IOS
+    testx{
+        vector<int>arr(maxn,0);
+       vector<int>ans;
+       int n;
+       cin>>n;
+       int h_index=0;
+       rep(i,n){
+           int a;
+           cin>>a;
+           update(a,arr);
+           int temp = sum(maxn-1,arr)-sum(h_index,arr);
+           
+           if(temp>h_index){h_index++;}
+           
+           ans.push_back(h_index);
+         
+       }
+        cout<<"Case #"<<x<<": ";
+        for(auto u: ans){
+            cout<<u<<" ";
+        }
+        cout<<endl;
+        
+  
+    }
+
+
+
+}
