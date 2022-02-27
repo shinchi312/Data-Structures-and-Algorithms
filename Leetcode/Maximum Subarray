@@ -1,0 +1,19 @@
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+A subarray is a contiguous part of an array.
+
+
+logic : kadane algorithm where we check the sum so far is greater or present element is greater than current sum and find best among that sum
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int sum = 0;
+        int best = INT_MIN;
+        for(int i = 0;i<nums.size();i++){
+           sum = max(nums[i],nums[i]+sum);
+            best = max(sum,best);
+        }
+        return best;
+    }
+};
