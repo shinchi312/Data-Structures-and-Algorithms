@@ -1,0 +1,45 @@
+There are N items, numbered 1,2,…,N. For each i (1≤i≤N), Item i has a weight of w 
+i
+​
+  and a value of v 
+i
+​
+ .
+
+Taro has decided to choose some of the N items and carry them home in a knapsack. The capacity of the knapsack is W, which means that the sum of the weights of items taken must be at most W.
+
+Find the maximum possible sum of the values of items that Taro takes home.
+
+# classical dynamic programming
+link : https://atcoder.jp/contests/dp/tasks/dp_d
+
+code : 
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+using dd = vector<vector<int>>;
+#define rep(i, n) for(int i = 0; i < n; ++i)
+#define test int t;cin>>t;while(t--)
+#define testx int t;cin>>t;for(int x=1;x<=t;x++)
+#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define endl '\n'
+
+int32_t main() {
+    IOS
+    
+   int n,W;
+   cin>>n>>W;
+   vector<int>dp(W+1,0);
+  dp[0] =1;
+   int ans = 0;
+   rep(i, n){
+       int v,w;
+       cin>>w>>v;
+       for(int j =W;j>=0;j--){
+         if(j+w<=W&&dp[j]){dp[j+w] = max(dp[j]+v,dp[j+w]);ans = max(dp[j+w],ans);} 
+       }
+   }
+
+
+cout<<ans-1;
+}
