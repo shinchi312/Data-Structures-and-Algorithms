@@ -1,0 +1,29 @@
+You are given a list of integers nums and an integer pos. Find a sublist A of nums that includes the index (0-indexed) pos such that min(A) * A.length is maximized and return the value.
+
+Constraints
+
+n ≤ 100,000 where n is the length of nums
+
+
+logic : use two pointer starting both the pointer from the pos and then greedly moving in either direction this will work as we are greedly putting the maximum numbers so that 
+minimum of the numbers is maximized 
+
+
+int solve(vector<int>& nums, int pos) {
+    int i = pos;
+    int j = pos;
+    int ans = nums[pos];
+    int m = nums[pos];
+    for(auto u :nums){
+        int left = (i-1>=0)?nums[i-1]:INT_MIN;
+        int right = (j+1<nums.size())?nums[j+1]:INT_MIN;
+        if(left >=right){
+            i-=1;
+            m = min(nums[i],m);           
+            
+        }
+        else {j+=1; m = min(nums[j],m);}
+        ans = max(ans,m*(j-i+1)); 
+    }
+    return ans;
+}
