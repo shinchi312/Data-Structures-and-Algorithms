@@ -1,0 +1,26 @@
+You are given a list of positive integers nums. Return the maximum possible nums[i] ^ nums[j] for any i < j.
+
+logic : we need to find maximum set bit that can be placed in our answer so now we need to find two number which fits in our category so we will be using property of xor that
+a^b = c then a^c = b
+int solve(vector<int>& nums) {
+
+int ans = 0;
+int mask = 0;
+unordered_set<int>se;
+    for(int i =30;i>=0;i--){
+        mask|= (1<<i);
+        for(int i =0;i<nums.size();i++){se.insert(nums[i]&mask);}
+        int max = ans|(1<<i);
+        for(int j : se){
+            //here we use property of xor that if a^b = c then a^c = b
+            if(se.count(max^j)){
+                ans = max;
+                break;
+            }
+        }
+        se.clear();
+
+    }
+    return ans;
+    
+}
