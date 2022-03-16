@@ -8,6 +8,10 @@ n ≤ 100,000 where n is the length of nums
 logic : use two pointer starting both the pointer from the pos and then greedly moving in either direction this will work as we are greedly putting the maximum numbers so that 
 minimum of the numbers is maximized 
 
+// more clear explanation : We greedily extend our window to the left or the 
+right based on which one is larger. This is optimal because if the minimum can only decrease, it doesn't matter if by extending to the smaller side we can reach a really
+large number.
+
 
 int solve(vector<int>& nums, int pos) {
     int i = pos;
