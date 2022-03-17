@@ -1,0 +1,22 @@
+Given a lowercase alphabet string s
+, return the minimum number of characters that we need to delete such that the frequency of each character occurs a unique number of times.
+
+
+int solve(string s) {
+    int freq[26] = {0};
+    
+    for(auto u : s){freq[u-'a']++;}
+    priority_queue<int>pq;
+    for(int i =0;i<26;i++){
+        if(freq[i])pq.push(freq[i]);
+    }
+    int ans = 0;
+    while(!pq.empty()){
+        int front = pq.top();
+        pq.pop();
+        if(pq.empty()){return ans;}
+        if(front==pq.top()){ans++;if(front>1)pq.push(front-1);} 
+    }
+   return ans;    
+
+}
