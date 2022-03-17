@@ -1,0 +1,15 @@
+You are playing a game against a friend where in each round you pick a number from 1 to k to add to a shared running total that initially starts from 0. The first person to reach or exceed the running total to target wins.
+
+Given that you go first, return whether you can force a win if everyone plays optimally.
+
+Constraints
+
+k ≤ 30
+target ≤ 1,000
+
+
+
+bool solve(int k, int target) {
+   
+    return target%(k+1);
+}
