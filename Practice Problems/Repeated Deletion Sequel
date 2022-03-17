@@ -1,0 +1,29 @@
+Given a string s and an integer k, repeatedly delete the earliest k consecutive duplicate characters.
+
+Constraints
+
+k, n ≤ 100,000 where n is the length of s.
+logic use stack to store current freq and char
+code :
+
+string solve(string s, int k) {
+    if(k==1)return "";
+  stack<pair<char,int>>st;
+  for(int i =0;i<s.size();i++){
+      if(st.empty()){
+          st.push({s[i],1});
+      }
+      else {
+          auto [x,y] = st.top();
+          if(x==s[i]){st.push({s[i],y+1});
+          auto [x1,y1] = st.top();
+          if(y1==k){while(y1--){st.pop();}}}
+          else {st.push({s[i],1});}
+      }
+  }
+string ans = "";
+while(!st.empty()){ans+=st.top().first;st.pop();}
+reverse(ans.begin(),ans.end());
+return ans;
+
+}
