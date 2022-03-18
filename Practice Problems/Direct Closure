@@ -1,0 +1,31 @@
+Given a two-dimensional list of integers graph representing an undirected graph as an adjacency list, return a two-dimensional matrix M where
+
+M[i][j] = 1 if there is a path between vertices i and j.
+M[i][j] = 0 otherwise.
+Constraints
+
+1 ≤ n * m ≤ 100,000 where n and m are the number of rows and columns in graph
+
+logic : i have used dfs but good solution will be use union find
+
+code: 
+
+void dfs(int s, vector<vector<int>>&adj,vector<vector<int>>&ans,vector<bool>&vis,int i){
+    if(vis[s])return;
+    vis[s] = true;
+    ans[i][s] = 1;
+    for(auto u : adj[s]){
+        dfs(u,adj,ans,vis,i);
+    }
+}
+
+
+vector<vector<int>> solve(vector<vector<int>>& graph) {
+ int n = graph.size();   vector<vector<int>>ans(n,vector<int>(n));
+ for(int i =0;i<n;i++){
+     
+     vector<bool>vis(n);
+     dfs(i,graph,ans,vis,i);
+ }
+ return ans;
+}
