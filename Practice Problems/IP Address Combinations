@@ -1,0 +1,67 @@
+Given a string of digits ip, generate all possible valid IP address combinations and return them in sorted order.
+
+IP addresses must follow the format A.B.C.D, where A, B, C, and D are integers between 0 and 255. Zero-prefixed numbers, such as 01 and 065, are not allowed, except for 0 itself.
+
+Constraints
+
+4 ≤ n ≤ 12 where n is the length of ip.
+
+
+use backtracking 
+code :
+
+// void valid(int pos, string ip ,int split , string str,vector<string>&ans){
+
+// if(pos==ip.size()&&split==5) {ans.push_back(str.substr(1)); return;}
+
+// for(int i = pos;i<pos+3&&i<ip.size();i++){
+//      string ad = ip.substr(pos,i-pos+1);
+//     if((ad[0]=='0'&&ad.size()>1)||stol(ad)>255)return;
+//     valid(i+1,ip,split+1,str+"."+ad,ans);
+
+// }
+
+
+// }
+// vector<string> solve(string ip) {
+//     vector<string>ans;
+
+//     valid(0,ip,1,"",ans);
+//     return ans;
+
+    
+// }
+
+
+ bool check(string str){
+    string temp = "";
+for(int i =0;i<str.size();i++){
+    if(str[i]=='.'){
+       
+        if(stoi(temp)>255)return false;
+        if(temp[0]=='0'&&temp.size()>1)return false;
+        temp="";
+    }
+    else temp+=str[i];
+}
+return stoi(temp)<=255&&!(temp[0]=='0'&&temp.size()>1);
+}
+
+void valid(int pos,int split,string ip,string str,vector<string>&ans ){
+    if(pos==ip.size())return;
+    if(split==3){
+        str +=ip.substr(pos);
+        if(check(str))ans.push_back(str);
+        return;
+    }
+    for(int i =pos;i<ip.size();i++){
+        valid(i+1,split+1,ip,str+ip.substr(pos,i-pos+1)+'.',ans);
+    }
+}
+
+vector<string> solve(string ip) {
+    vector<string>ans;
+    valid(0,0,ip,"",ans);
+    return ans;
+    
+}
