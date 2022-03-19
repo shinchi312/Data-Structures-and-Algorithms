@@ -1,0 +1,22 @@
+Given a list of positive integers nums, return whether you can divide the list into two groups a and b such that:
+
+The sum of a and the sum of b are equal.
+Every number in a is strictly less than every number in b.
+Constraints
+
+1 ≤ n ≤ 100,000 where n is the length of nums.
+
+code :
+
+bool solve(vector<int>& nums) {
+    int sum = 0;
+    for(auto u : nums){sum+=u;}
+    if(sum&1||nums.size()==1){return false;}
+    sort(nums.begin(),nums.end());
+    int sum1 = 0;int i =0;
+    for(;i<nums.size();i++){
+        if(sum1==sum/2)break;
+        sum1+= nums[i];
+    }
+    return sum1==sum/2&&nums[i-1]!=nums[i];
+}
