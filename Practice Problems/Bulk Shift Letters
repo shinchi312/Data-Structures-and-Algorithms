@@ -1,0 +1,28 @@
+You are given a lowercase alphabet string s and a list of integers shifts. Each element shifts[i] means to shift the first i + 1 letters of s by shifts[i] positions. Shifting a letter should wrap over "z" to "a". For example, shifting “z” by 2 results in “b”.
+
+Return the resulting string after applying shifts to s.
+
+Constraints
+
+1 ≤ n ≤ 100,000 where n is the length of s and shifts
+Example 1
+Input
+s = "afz"
+shifts = [1, 2, 1]
+Output
+"eia"
+Explanation
+We shift the first 1 letter by 1 position to get: "bfz"
+We shift the first 2 letters by 2 position to get: "dhz"
+We shift the first 3 letters by 1 position to get: "eia"
+
+
+string solve(string s, vector<int>& shifts) {
+int sum =0;
+ for(int i = shifts.size()-1;i>=0;i--){
+(sum+=shifts[i])%=26;
+int add = (s[i]-'a'+sum)%26;
+s[i] = char('a'+add);
+ }
+ return s;   
+}
