@@ -1,0 +1,23 @@
+You are given three positive integers a, b and target. Consider an operation where you take either a or b and update one of the bits to 1 or to 0.
+
+Return the minimum number of operations required to make a | b = target.
+
+
+code:
+
+int solve(int a, int b, int target) {
+    int check = a|b;
+    int ans = 0;
+    while(target>0){
+        if((check&1)!=(target&1)){if(check&1&&(a&1)&&(b&1)){ans+=2;}else ans++;}
+       
+        check>>=1;
+        target>>=1;
+        a>>=1;
+        b>>=1;
+        if(target==0){
+            while(check>0){ans+=(check&1)+((a&1)&&(b&1));check>>=1;a>>=1;b>>=1;}
+        }
+    }
+    return ans;
+}
