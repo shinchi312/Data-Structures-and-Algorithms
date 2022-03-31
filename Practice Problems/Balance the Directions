@@ -1,0 +1,37 @@
+You are given a string s containing "N", "S", "W" and "E". Return the length of the shortest substring we can update such that each of the four characters occur n / 4 times each.
+
+Constraints
+
+n ≤ 100,000 where n is the length of s
+n % 4 = 0
+
+
+logic : we have to use two pointer starting both left and right starting from 0 and increase right  and reduce freq of charater and then check for if freq of every character
+is less than n/4 and if it is we have to increase left pointer until minimum is achieved
+
+
+int solve(string s) {
+    unordered_map<char,int>m;
+    for(auto u : s) m[u]++;
+    int n = s.size();
+    int k = n/4;
+    int left = 0;
+    int right = 0;
+
+    int ans = n;
+    while(right<s.size()){
+
+        m[s[right]]--;
+        while(left<n&&m['N']<=k&&m['S']<=k&&m['W']<=k&&m['E']<=k){
+            ans = min(ans,right-left+1);
+            m[s[left]]++;
+            left++;
+        }
+        right++;
+        
+    }
+    return ans;
+    
+
+
+}
