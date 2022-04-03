@@ -1,0 +1,25 @@
+Given lowercase alphabet strings a, b, and c return whether there's any way of obtaining c by merging characters in order from a and b.
+
+
+logic : you have to check  the current  character match with :
+if a[i-1]==b[j-1]==c[i+j-1] then check which string was dp[i][j] = (if dp[i][j-1] or dp[i-1][j]) is possible
+else a or b character is matching c 
+
+bool solve(string a, string b, string c) {
+    
+    int n = a.size();
+    int m = b.size();
+    vector<vector<int>>dp(n+1,vector<int>(m+1));
+    for( int i = 0;i<=n;i++){
+        for(int j = 0;j<=m;j++){
+            if(i==0&&j==0)dp[i][j] = 1;
+
+            else if(i==0){dp[i][j] = (b[j-1]==c[j-1])&&dp[i][j-1];}
+            else if(j==0){dp[i][j] = (a[i-1]==c[i-1])&&dp[i-1][j];}
+            else if(a[i-1]==b[j-1]){dp[i][j] = (a[i-1]==c[i+j-1])&&(dp[i-1][j]||dp[i][j-1]);}
+            else dp[i][j] = ((a[i-1]==c[i+j-1])&&dp[i-1][j])||((b[j-1]==c[i+j-1])&&dp[i][j-1]);
+        }
+    }
+    return dp[n][m];
+    
+}
