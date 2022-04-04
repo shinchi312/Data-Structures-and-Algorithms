@@ -1,0 +1,64 @@
+We have N locked treasure boxes, numbered 1 to N.
+
+A shop sells M keys. The i-th key is sold for a 
+i
+​
+  yen (the currency of Japan), and it can unlock b 
+i
+​
+  of the boxes: Box c 
+i1
+​
+ , c 
+i2
+​
+ , ..., c 
+ib 
+i
+​
+ 
+​
+ . Each key purchased can be used any number of times.
+
+Find the minimum cost required to unlock all the treasure boxes. If it is impossible to unlock all of them, print −1.
+
+link : https://atcoder.jp/contests/abc142/tasks/abc142_e
+
+logic : we can create mask of the treasure that key unlock and then dp[new_mask= mask|i] = min(dp[new_mask],dp[i]+items_cost);
+
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+using dd = vector<vector<int>>;
+#define rep(i, n) for(int i = 0; i < n; ++i)
+#define test int t;cin>>t;while(t--)
+#define testx int t;cin>>t;for(int x=1;x<=t;x++)
+#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define endl '\n'
+int LINF = 1001002003004005006ll;
+int32_t main() {
+    IOS
+    int n ,m;
+    cin>>n>>m;
+    int INF = 1e9;
+    vector<int>dp(5000,INF);
+    dp[0] = 0;
+    vector<int>a(m);
+    vector<int>b(m);
+    vector<vector<int>>c(m);
+    rep(i,m){
+        cin>>a[i]>>b[i];
+        rep(j, b[i]){int x ; cin>>x; c[i].push_back(x);}
+    }
+  rep(i,m){
+      int mask = 0;
+    rep(j, b[i]){mask|= (1<<(c[i][j]-1));}
+    
+    rep(j, (1<<n)){dp[j|mask] = min(dp[j]+a[i],dp[j|mask]);}
+  }
+  if(dp[(1<<n)-1]==INF)dp[(1<<n)-1] = -1;
+  cout<<dp[(1<<n)-1];
+
+
+
+}
