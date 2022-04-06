@@ -1,0 +1,33 @@
+You are given a list of integers nums containing 1s and 0s and an integer k. Given that you can set at most k 0s to 1s, return the length of the longest sublist containing all 1s.
+
+Constraints
+
+n ≤ 100,000 where n is the length of nums
+Example 1
+Input
+nums = [1, 1, 1, 0, 0, 1, 0]
+k = 2
+Output
+6
+Explanation
+We can set the two middle 0s to 1s and then the list becomes [1, 1, 1, 1, 1, 1, 0].
+
+
+Logic : Use sliding window algorithm
+
+int solve(vector<int>& nums, int k) {
+   
+
+    int z = 0;
+    int ans = 0;
+    int i = 0;
+    int j = 0;
+    while(i<nums.size()&&j<nums.size()){        
+        if(nums[j]==0)z++;
+        if(z>k){while(nums[i]!=0)i++;z--;i++;}
+        ans = max(j-i+1,ans);
+        
+        j++;
+    }
+    return ans;
+}
