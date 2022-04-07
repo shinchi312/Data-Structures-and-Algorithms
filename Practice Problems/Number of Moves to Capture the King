@@ -1,0 +1,114 @@
+You are given a two-dimensional integer matrix board containing 0s, 1s and 2s representing some n x n chessboard. Each 0 represents an empty cell, 1 represents the knight and 2 represents the king. There is at least one knight but exactly one king.
+
+Given that the king stays still, return the minimum number of moves it would take for some knight to land on the king. If there's no solution, return -1. A knight can't land on another knight.
+
+Constraints
+
+2 ≤ n ≤ 500 where n is the number of rows and columns in board
+1 ≤ t < n * n where t is the number of knights
+k = 1 where k is the number of kings.
+Example 1
+Input
+board = [
+    [1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 2],
+    [1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0]
+]
+Output
+2
+Explanation
+The knight on top left corner can jump twice to land on the king.
+
+Example 2
+Input
+board = [
+    [1, 2],
+    [1, 1]
+]
+Output
+-1
+Explanation
+There is no way to land on the king here.
+
+
+
+logic : use bfs 
+
+
+// pair<int,int> search(vector<vector<int>>& board,int x){
+//     for(int i =0;i<board.size();i++){
+//         for(int j = 0;j<board[0].size();j++ ){if(board[i][j]==x)
+//         {
+//             return {i,j};
+//             }
+//             }
+//     }
+//     return {};
+// } 
+
+
+// int solve(vector<vector<int>>& board) {
+//     vector<pair<int,int>>dir = {{2,-1},{2,1},{-2,-1},{-2,1},{-1,2},{1,2},{-1,-2},{1,-2}};
+//     int level = 0;
+// set<pair<int,int>>vis;
+//     queue<pair<int,int>>q;
+//     q.push(search(board,2));
+//     while(!q.empty()){
+//       int s = q.size();
+//       level++;
+//       for(int i =0;i<s;i++){
+//           auto [row,col] = q.front();
+
+//           q.pop();
+//           if(vis.count({row,col}))continue;
+//           vis.insert({row,col});
+//           if(board[row][col]==1)return level-1; 
+//           for(auto [r,c]: dir){
+//               int rr = r+row;
+//               int cc = c+col;
+//               if(rr>=0&&cc>=0&&rr<board.size()&&cc<board[0].size())
+//               q.push({rr,cc});
+//           }
+//       }
+
+
+//     }
+
+
+//     return -1;
+// }
+int solve(vector<vector<int>>& nums) {
+    int n = nums.size(), m = nums[0].size();
+    vector<vector<int>> dist(n, vector<int>(m, INT_MAX));
+    queue<pair<int, int>> q;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (nums[i][j] == 2) {
+                dist[i][j] = 0;
+                q.push({i, j});
+                break;
+            }
+        }
+    }
+    if (q.empty()) return -1;
+
+    vector<int> xdir{1, 2, -1, 2, -1, -2, 1, -2};
+    vector<int> ydir{2, 1, 2, -1, -2, -1, -2, 1};
+    while (!q.empty()) {
+        auto [i, j] = q.front();
+        q.pop();
+        for (int k = 0; k < 8; k++) {
+            int x = i + xdir[k];
+            int y = j + ydir[k];
+            if (x >= 0 and x < n and y >= 0 and y < m and nums[x][y] != 2 and
+                dist[x][y] > dist[i][j] + 1) {
+                if (nums[x][y] == 1) return dist[i][j] + 1;
+                dist[x][y] = dist[i][j] + 1;
+                q.push({x, y});
+            }
+        }
+    }
+    return -1;
+}
