@@ -1,0 +1,93 @@
+Problem Statement
+Given is an integer sequence A1,A2,....AN
+  of length N.
+
+We will choose exactly lower_bound(N/2)
+ elements from this sequence so that no two adjacent elements are chosen.
+
+Find the maximum possible sum of the chosen elements.
+
+Here ⌊x⌋ denotes the greatest integer not greater than x.
+
+
+
+Sample Input 1 
+
+6
+1 2 3 4 5 6
+Sample Output 1 
+
+12
+Choosing 2, 4, and 6 makes the sum 12, which is the maximum possible value.
+
+Sample Input 2 
+
+5
+-1000 -100 -10 0 10
+Sample Output 2 
+
+0
+Choosing −10 and 10 makes the sum 0, which is the maximum possible value.
+
+Sample Input 3 
+
+10
+1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000
+Sample Output 3 
+
+5000000000
+Watch out for overflow.
+
+Sample Input 4 
+
+27
+18 -28 18 28 -45 90 -45 23 -53 60 28 -74 -71 35 -26 -62 49 -77 57 24 -70 -93 69 -99 59 57 -49
+Sample Output 4 
+
+295
+
+
+logic : Setting dp [i] ⌊i2⌋ Maximum sum of numbers.
+
+This i is an odd number, ai, dpi = dpi-2 + ai, no dpi = dpi-1.
+
+At this even number, ai, dpi = dpi-2 + ai, no dpi dpi = pre_sumi-1.
+
+At i = 4 , it's not possible to take a fruit, a1 a2 a3, a1 a2 a3, a1 a1 a3, a1 a3, and a1 a1.
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+using dd = vector<vector<int>>;
+#define rep(i, n) for(int i = 1; i < n; ++i)
+#define test int t;cin>>t;while(t--)
+#define testx int t;cin>>t;for(int x=1;x<=t;x++)
+#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define endl '\n'
+int LINF = 1001002003004005006ll;
+int32_t main() {
+    IOS
+    int n ;
+    cin>>n;
+    vector<int>a(n+1);
+    vector<int>sum(n+1);
+    vector<int>dp(n+1);
+    
+    rep(i,n+1){
+        cin>>a[i];
+        if(i&1){sum[i]+=sum[(i==1)?i:i-2]+a[i];}}
+        
+        for(int i = 2;i<n+1;i++ ){
+            if(i&1){
+                dp[i] = max(dp[i-1],dp[i-2]+a[i]);
+            }
+            else dp[i] = max(dp[i-2]+a[i],sum[i-1]);
+        }
+        cout<<dp[n];
+
+
+
+}
