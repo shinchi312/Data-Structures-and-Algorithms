@@ -1,0 +1,54 @@
+You are given a two-dimensional integer matrix containing 0s and 1s where 0 represents water and 1 represents land. Return a new matrix of the same dimensions where we increase the height of every land cell as much as possible given that:
+
+The height of any water cell stays 0
+Any cell can differ by at most 1 unit of height between neighboring cells (up, down, left, right)
+You can assume there is at least one water cell.
+
+Constraints
+
+n, m ≤ 250 where n and m are the number of rows and columns in matrix
+Example 1
+Input
+matrix = [
+    [0, 1, 0],
+    [1, 1, 1],
+    [1, 1, 1]
+]
+Output
+[
+    [0, 1, 0],
+    [1, 2, 1],
+    [2, 3, 2]
+]
+logic : use multi source bfs
+vector<vector<int>> solve(vector<vector<int>>& matrix) {
+    queue<pair<int,int>>q;
+    int n = matrix.size();
+    int m = matrix[0].size();
+    vector<vector<int>>ans(n,vector<int>(m));
+    vector<vector<int>>vis(n,vector<int>(m));
+    for(int i =0;i<matrix.size();i++){
+        for(int j = 0;j<matrix[0].size();j++){
+            if(!matrix[i][j]){q.push({i,j});vis[i][j] = 1;}
+        }
+    }
+    vector<int>col = {0,0,-1,1};
+    vector<int>row = {-1,1,0,0};
+    while(!q.empty()){
+        int s = q.size();
+        for(int i =0;i<s;i++){
+            auto [y,x] = q.front();
+            q.pop();
+           for(int j = 0;j<4;j++){
+               int rr = row[j]+y;
+               int cc = col[j]+x;
+               if(cc>=0&&rr>=0&&rr<n&&cc<m){
+                   if(!vis[rr][cc]){vis[rr][cc] =1;
+                       ans[rr][cc] = ans[y][x]+1;q.push({rr,cc});
+               }}
+           }
+        }
+    }
+    return ans;
+    
+}
