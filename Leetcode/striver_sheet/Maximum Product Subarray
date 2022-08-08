@@ -1,0 +1,75 @@
+// dp day 25
+
+Questions :
+Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
+
+The test cases are generated so that the answer will fit in a 32-bit integer.
+
+A subarray is a contiguous subsequence of the array.
+
+ 
+
+Example 1:
+
+Input: nums = [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+Example 2:
+
+Input: nums = [-2,0,-1]
+Output: 0
+Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+ 
+
+Constraints:
+
+1 <= nums.length <= 2 * 104
+-10 <= nums[i] <= 10
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+
+Intuition : 
+Brute : You can take any index and taverse backwards to find max product time complexity will be of O(n^2)
+Optimal approach : You can maintain the 
+..minimum product - for negative numbers (if minimum being negatve it  can make whole product positive)
+..maximum product - for positive numbers(it will maximize the positive product it will also take care of the case where negative numbers combine to form product which is positive)
+ so pos = max(max(neg*nums[i],nums[i]),pos*nums[i])
+ and neg = min(min(neg*nums[i]),pos*nums[i](here we prestore its value for avoiding modification in earlier step))
+ 
+ 
+ 
+ 
+ Solution : 
+ class Solution {
+public: 
+    
+    
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+     
+      //  -1 -2 -3 -5 4 0 5 6 -5 
+        int ans = INT_MIN;
+        int neg =1;
+        int pos = 1;
+        
+        int z = 0;
+        for(int i = 0;i< n;i++){
+            if(nums[i]==0){
+                neg = 1;
+                pos = 1;
+                z = 1;
+                
+            }
+            int pospro = pos*nums[i];
+            pos = max(max(neg*nums[i],nums[i]),pos*nums[i]);
+            neg = min(min(neg*nums[i],nums[i]),pospro);
+            
+            ans = max(ans,pos);        
+            
+          
+            
+        }
+        return (z==1)?max(0,ans): ans;     
+        
+    }
+};
