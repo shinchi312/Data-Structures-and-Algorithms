@@ -1,0 +1,24 @@
+Problem link : 
+https://www.codingninjas.com/codestudio/problems/800284?topList=striver-sde-sheet-problems&utm_source=striver&utm_medium=website&leftPanelTab=0
+
+
+Intuition : You have to make rod of length N such that it cost maximum so we can either take a particular lenght or not take it. Here is space optimized solution where we just
+need previous and current value (note as we need only prev and curr we can do that in single array )
+
+
+int cutRod(vector<int> &price, int n)
+{ vector<int>prev(n+1);
+	for(int i = 0;i<=n;i++){
+        prev[i] = i*price[0];
+    }
+    for(int i = 1; i<n;i++){
+        for(int j = 0;j<=n;j++){
+            int nottake = prev[j];
+            int rodlen = i+1;
+            int take = INT_MIN;
+            if(j >= rodlen){take = price[i]+prev[j-rodlen];}
+            prev[j] = max(take,nottake);
+        }
+    }
+ return prev[n];
+}
