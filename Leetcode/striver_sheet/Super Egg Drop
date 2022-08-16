@@ -1,0 +1,88 @@
+Question : 
+You are given k identical eggs and you have access to a building with n floors labeled from 1 to n.
+
+You know that there exists a floor f where 0 <= f <= n such that any egg dropped at a floor higher than f will break, and any egg dropped at or below floor f will not break.
+
+Each move, you may take an unbroken egg and drop it from any floor x (where 1 <= x <= n). If the egg breaks, you can no longer use it. However, if the egg does not break, you may reuse it in future moves.
+
+Return the minimum number of moves that you need to determine with certainty what the value of f is.
+
+ 
+
+Example 1:
+
+Input: k = 1, n = 2
+Output: 2
+Explanation: 
+Drop the egg from floor 1. If it breaks, we know that f = 0.
+Otherwise, drop the egg from floor 2. If it breaks, we know that f = 1.
+If it does not break, then we know f = 2.
+Hence, we need at minimum 2 moves to determine with certainty what the value of f is.
+Example 2:
+
+Input: k = 2, n = 6
+Output: 3
+Example 3:
+
+Input: k = 3, n = 14
+Output: 4
+ 
+
+Constraints:
+
+1 <= k <= 100
+1 <= n <= 10^4
+
+
+Intuition : we need to have find the kth position where we can drop are egg so if left<right the so we are finding the maximum value for the given egg drop 
+
+
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution
+{
+    public:
+    //Function to find minimum number of attempts needed in 
+    //order to find the critical floor.
+    int solve(int n , int f ,vector<vector<int>>&dp){
+        if(f==1){return n;}
+        if(n==0) return 0;
+        if(dp[n][f]!= -1) return dp[n][f];
+        int ans = INT_MAX;
+        for(int k = 1;k<=n;k++){
+            int left = solve(k-1,f-1,dp);
+            int right = solve(n-k,f,dp);
+            ans = min(ans,1+max(left,right));
+        }
+        return dp[n][f] = ans;
+        
+    }
+    int eggDrop(int n, int k) 
+    {
+        vector<vector<int>>dp(k+1,vector<int>(n+1,));
+        return solve(k,n,dp);
+    }
+};
+
+//{ Driver Code Starts.
+int main()
+{
+    //taking total testcases
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        //taking eggs and floors count
+        int n, k;
+        cin>>n>>k;
+        Solution ob;
+        //calling function eggDrop()
+        cout<<ob.eggDrop(n, k)<<endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
